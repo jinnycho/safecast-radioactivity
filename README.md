@@ -1,15 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <!-- <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="logo.png" alt="Logo" width="80" height="80">
-  </a> -->
-
-  <p align="center">
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-  </p>
-</p>
-
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
