@@ -1,6 +1,3 @@
-# Radioactivity Map
-An interactive map using Safecast data, Spark, Mapbox and D3.
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -16,7 +13,6 @@ An interactive map using Safecast data, Spark, Mapbox and D3.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
-
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
@@ -24,9 +20,11 @@ An interactive map using Safecast data, Spark, Mapbox and D3.
   * [Installation](#installation)
 * [Usage](#usage)
 
-<!-- ## About the Project
 
-### Built With
+## About the Project
+An interactive map using Safecast data, Spark, Mapbox and D3.
+
+<!-- ### Built With
 
 ## Getting Started
 
