@@ -1,4 +1,4 @@
-name := "Safecast Radioactivity Map"
+name := "SafecastRadioactivityMap"
 
 version := "1.0"
 
