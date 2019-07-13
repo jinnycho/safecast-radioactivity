@@ -10,6 +10,8 @@ import scala.math.sqrt
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 
+import org.apache.spark.ml.clustering.KMeans
+import org.apache.spark.ml.evaluation.ClusteringEvaluator
 
 object SafecastClustering {
 
@@ -25,7 +27,7 @@ object SafecastClustering {
     val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
-        columnFilteredDF = columnFilteredDF.drop(col)
+      columnFilteredDF = columnFilteredDF.drop(col)
     }
     // filter null values
     var nullFilteredDF = columnFilteredDF.na.drop()
@@ -33,9 +35,17 @@ object SafecastClustering {
     var stringFilterList = List("latitude", "longitude", "value")
     var stringFilteredDF = nullFilteredDF
     for (col <- stringFilterList) {
-        stringFilteredDF = stringFilteredDF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
+      stringFilteredDF = stringFilteredDF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
     }
     return stringFilteredDF
+  }
+
+  /*
+   * Apply K-Means Clustering to the given data
+   *
+   */
+  def cluster(safecastDF: DataFrame) : DataFrame = {
+
   }
 
   /** Our main function where the action happens */
