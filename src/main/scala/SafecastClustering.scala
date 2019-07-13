@@ -14,7 +14,7 @@ import org.apache.spark.sql.functions._
 object SafecastClustering {
 
   // Case class for a column name for lat, lon, value (radioactivity)
-  final case class SafecastR(lat: Int, lon: Int, value: Int)
+  final case class SafecastR(lat: Double, lon: Double, value: Double)
 
   /** Our main function where the action happens */
   def main(args: Array[String]) {
@@ -35,7 +35,7 @@ object SafecastClustering {
     // filter out header
     val filtered_data = data.filter(row => row != header)
     // Read in each safecast estimate and extract lat/lon/value
-    val lines = filtered_data.map(x => SafecastR(x.split(',')(1).toInt, x.split(',')(2).toInt, x.split(',')(3).toInt))
+    val lines = filtered_data.map(x => SafecastR(x.split(',')(1).toDouble, x.split(',')(2).toDouble, x.split(',')(3).toDouble))
 
     // Convert to a Dataset
     import spark.implicits._
