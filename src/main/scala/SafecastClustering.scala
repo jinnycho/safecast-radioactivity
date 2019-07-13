@@ -29,19 +29,13 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
-    val data = spark.sparkContext.textFile("/Users/jinnycho/Downloads/mini-measurements.csv")
-    // extract header
-    val header = data.first()
-    // filter out header
-    val filtered_data = data.filter(row => row != header)
-    // Read in each safecast estimate and extract lat/lon/value
-    val lines = filtered_data.map(x => SafecastR(x.split(',')(1).toDouble, x.split(',')(2).toDouble, x.split(',')(3).toDouble))
+    val data = spark.read
+      .format("csv")
+      .option("header", "true") // filter header
+      .option("charset", "UTF8")
+      .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
-    // Convert to a Dataset
-    import spark.implicits._
-    val safecastRDS = lines.toDS()
-
-    safecastRDS.show()
+    data.show()
 
     spark.stop()
   }
