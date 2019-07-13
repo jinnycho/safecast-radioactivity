@@ -16,7 +16,10 @@ object SafecastClustering {
   // Case class for a column name for lat, lon, value (radioactivity)
   final case class SafecastR(lat: Double, lon: Double, value: Double)
 
-  // Filter the given data
+  /*
+   * Filter the given data
+   * Create a dataframe of latitude, longitude, value
+   */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
     // filter unnecessary columns
     val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
