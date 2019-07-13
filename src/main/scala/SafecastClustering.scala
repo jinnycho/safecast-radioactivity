@@ -13,12 +13,31 @@ import org.apache.spark.sql.functions._
 
 object SafecastClustering {
 
+  // Case class for a column name for lat, lon, value (radioactivity)
+  final case class SafecastR(lat: Int, lon: Int, value: Int)
+
   /** Our main function where the action happens */
   def main(args: Array[String]) {
 
     // Set the log level to only print errors
     Logger.getLogger("org").setLevel(Level.ERROR)
 
+    // Use new SparkSession interface in Spark 2.0
+    val spark= SparkSession
+      .builder
+      .appName("SafecastClustering")
+      .master("local[*]")
+      .getOrCreate()
 
+    // Read in each safecast estimate and extract lat/lon/value
+    val lines = spark.sparkContext.textFile("/Users/jinnycho/Downloads/mini-measurements.csv").map(x => SafecastR(x.split(",")(1).toInt, x.split(",")(2).toInt, x.split(",")(3).toInt))
+
+    // Convert to a Dataset
+    import spark.implicits._
+    val safecastRDS = lines.toDS()
+
+    safecastRDS.show()
+
+    spark.stop()
   }
 }
