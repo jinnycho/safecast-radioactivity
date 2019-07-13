@@ -4,7 +4,7 @@
 [0m[[0m[0minfo[0m] [0m[0mMerging files...[0m
 [0m[[0m[33mwarn[0m] [0m[0mMerging 'META-INF/MANIFEST.MF' with strategy 'discard'[0m
 [0m[[0m[33mwarn[0m] [0m[0mStrategy 'discard' was applied to a file[0m
-[0m[[0m[0minfo[0m] [0m[0mSHA-1: 9e54eddc8a076a5125c02685c9b6d625923db6a2[0m
+[0m[[0m[0minfo[0m] [0m[0mSHA-1: ca5d5ecb41b9ca8aafc72402db763ee51b7f3efd[0m
 [0m[[0m[0minfo[0m] [0m[0mPackaging /Users/jinnycho/Documents/github/safecast-radioactivity/target/scala-2.11/SafecastRadioactivityMap-assembly-1.0.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
