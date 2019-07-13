@@ -16,6 +16,25 @@ object SafecastClustering {
   // Case class for a column name for lat, lon, value (radioactivity)
   final case class SafecastR(lat: Double, lon: Double, value: Double)
 
+  // Filter the given data
+  def cleanData(safecastDF: DataFrame) : DataFrame = {
+    // filter unnecessary columns
+    val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
+    var columnFilteredDF = safecastDF
+    for (col <- columnFilterlist) {
+        columnFilteredDF = columnFilteredDF.drop(col)
+    }
+    // filter null values
+    var nullFilteredDF = columnFilteredDF.na.drop()
+    // filter if it's not numeric
+    var stringFilterList = List("latitude", "longitude", "value")
+    var stringFilteredDF = nullFilteredDF
+    for (col <- stringFilterList) {
+        stringFilteredDF = stringFilteredDF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
+    }
+    return stringFilteredDF
+  }
+
   /** Our main function where the action happens */
   def main(args: Array[String]) {
 
@@ -29,27 +48,14 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
-    val safecast_DF = spark.read
+    val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
       .option("charset", "UTF8")
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
-    // filter unnecessary columns
-    val column_filterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
-    var column_filtered_DF = safecast_DF
-    for (col <- column_filterlist) {
-        column_filtered_DF = column_filtered_DF.drop(col)
-    }
-    // filter null values
-    var null_filtered_DF = column_filtered_DF.na.drop()
-    // filter if it's not numeric
-    var string_filter_list = List("latitude", "longitude", "value")
-    var string_filtered_DF = null_filtered_DF
-    for (col <- string_filter_list) {
-        string_filtered_DF = string_filtered_DF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
-    }
-    string_filtered_DF.show()
+    val stringFilteredDF = cleanData(safecastDF)
+    stringFilteredDF.show()
 
     spark.stop()
   }
