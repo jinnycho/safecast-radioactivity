@@ -29,20 +29,27 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
-    val safecastDF = spark.read
+    val safecast_DF = spark.read
       .format("csv")
       .option("header", "true") // filter header
       .option("charset", "UTF8")
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
     // filter unnecessary columns
-    val filterList = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
-    var filteredDF = safecastDF
-    for (col <- filterList) {
-        filteredDF = filteredDF.drop(col)
+    val column_filterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
+    var column_filtered_DF = safecast_DF
+    for (col <- column_filterlist) {
+        column_filtered_DF = column_filtered_DF.drop(col)
     }
-
-    filteredDF.show()
+    // filter null values
+    var null_filtered_DF = column_filtered_DF.na.drop()
+    // filter if it's not numeric
+    var string_filter_list = List("latitude", "longitude", "value")
+    var string_filtered_DF = null_filtered_DF
+    for (col <- string_filter_list) {
+        string_filtered_DF = string_filtered_DF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
+    }
+    string_filtered_DF.show()
 
     spark.stop()
   }
