@@ -29,13 +29,20 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
-    val data = spark.read
+    val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
       .option("charset", "UTF8")
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
-    data.show()
+    // filter unnecessary columns
+    val filterList = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
+    var filteredDF = safecastDF
+    for (col <- filterList) {
+        filteredDF = filteredDF.drop(col)
+    }
+
+    filteredDF.show()
 
     spark.stop()
   }
