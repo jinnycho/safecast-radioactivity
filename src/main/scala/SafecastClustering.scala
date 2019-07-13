@@ -35,7 +35,7 @@ object SafecastClustering {
     // filter out header
     val filtered_data = data.filter(row => row != header)
     // Read in each safecast estimate and extract lat/lon/value
-    val lines = filtered_data.map(x => SafecastR(x.split(",")(1).toInt, x.split(",")(2).toInt, x.split(",")(3).toInt))
+    val lines = filtered_data.map(x => SafecastR(Integer.parseInt(x.split(",")(1)), Integer.parseInt(x.split(",")(2)), Integer.parseInt(x.split(",")(3))))
 
     // Convert to a Dataset
     import spark.implicits._
