@@ -4,15 +4,11 @@
 [0m[[0m[0minfo[0m] [0m[0mMerging files...[0m
 [0m[[0m[33mwarn[0m] [0m[0mMerging 'META-INF/MANIFEST.MF' with strategy 'discard'[0m
 [0m[[0m[33mwarn[0m] [0m[0mStrategy 'discard' was applied to a file[0m
-[0m[[0m[0minfo[0m] [0m[0mSHA-1: 27d3cbee227d45238467022a727b361c3cda3bac[0m
+[0m[[0m[0minfo[0m] [0m[0mSHA-1: e5eb57c96139fafdef98a46fb021dbaab4669cbe[0m
 [0m[[0m[0minfo[0m] [0m[0mPackaging /Users/jinnycho/Documents/github/safecast-radioactivity/target/scala-2.11/SafecastRadioactivityMap-assembly-1.0.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$2$$anonfun$apply$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$2$$anonfun$apply$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$2.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$SafecastR$.class[0m

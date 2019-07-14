@@ -4,7 +4,7 @@
 		module="safecastradioactivitymap_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20190713170402"
+		publication="20190713200100"
 	>
 		<description>
 		SafecastRadioactivityMap
@@ -34,5 +34,6 @@
 		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-core_2.11" rev="2.1.0" conf="provided->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-sql_2.11" rev="2.1.0" conf="provided->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-mllib_2.11" rev="2.1.0" conf="provided->default(compile)"/>
 	</dependencies>
 </ivy-module>
