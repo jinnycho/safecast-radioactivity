@@ -55,12 +55,15 @@ object SafecastClustering {
    * Summarize K-Means clustering result
    * Get average radioactivity value in cluster
    */
-  def reduceCluster(kMeansDF: DataFrame) = {
+  def reduceCluster(kMeansDF: DataFrame) : DataFrame = {
     // list of average radioactivity value in cluster
     // [clusterNum: avgValue]
     val avgValues = kMeansDF.groupBy("prediction").avg("value")
     val avgLats = kMeansDF.groupBy("prediction").avg("latitude")
     val avgLons = kMeansDF.groupBy("prediction").avg("longitude")
+    val avgLatsLons = avgLats.join(avgLons, "prediction")
+    val avgLatsLonsVals = avgLatsLons.join(avgValues, "prediction")
+    return avgLatsLonsVals
   }
 
 
