@@ -8,6 +8,7 @@ import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 import scala.math.sqrt
 import org.apache.spark.sql._
+import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
 
 import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
@@ -29,7 +30,7 @@ object SafecastClustering {
    */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
     // 1. filter unnecessary columns
-    val columnFilterlist = List("Captured Time", "Unit", "Location Name", "Device ID", "MD5Sum", "Height", "Surface", "Radiation", "Uploaded Time", "Loader ID")
+    val columnFilterlist = List("captured_time", "unit", "location_name", "device_id", "MD5Sum", "height", "surface", "radiation", "upload_time", "loader_id")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
       columnFilteredDF = columnFilteredDF.drop(col)
@@ -45,7 +46,7 @@ object SafecastClustering {
    * to create clusterings
    */
   def getCluster(safecastDF: DataFrame, numClusters: Int) : DataFrame = {
-    val assembler = new VectorAssembler().setInputCols(Array("Latitude","Longitude")).setOutputCol("features")
+    val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
     val kmeans = new KMeans().setK(numClusters).setFeaturesCol("features").setPredictionCol("prediction")
     val pipeline = new Pipeline().setStages(Array(assembler, kmeans))
     val kMeansPredictionModel = pipeline.fit(safecastDF)
@@ -61,9 +62,9 @@ object SafecastClustering {
   def summarizeCluster(kMeansDF: DataFrame) : DataFrame = {
     // list of average radioactivity value in cluster
     // [clusterNum: avgValue]
-    val avgValues = kMeansDF.groupBy("prediction").avg("Value")
-    val avgLats = kMeansDF.groupBy("prediction").avg("Latitude")
-    val avgLons = kMeansDF.groupBy("prediction").avg("Longitude")
+    val avgValues = kMeansDF.groupBy("prediction").avg("value")
+    val avgLats = kMeansDF.groupBy("prediction").avg("latitude")
+    val avgLons = kMeansDF.groupBy("prediction").avg("longitude")
     val avgLatsLons = avgLats.join(avgLons, "prediction")
     val avgLatsLonsVals = avgLatsLons.join(avgValues, "prediction")
     return avgLatsLonsVals
@@ -110,19 +111,34 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
+    val customSchema = StructType(Array(
+      StructField("captured_time", StringType, true),
+      StructField("latitude", DoubleType, true),
+      StructField("longitude", DoubleType, true),
+      StructField("value", DoubleType, true),
+      StructField("unit", StringType, true),
+      StructField("location_name", StringType, true),
+      StructField("device_id", StringType, true),
+      StructField("MD5Sum", StringType, true),
+      StructField("height", StringType, true),
+      StructField("surface", StringType, true),
+      StructField("radiation", StringType, true),
+      StructField("upload_time", StringType, true),
+      StructField("loader_id", StringType, true)
+    ))
+
     val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
-      .option("inferSchema", "true")
       .option("charset", "UTF8")
+      .schema(customSchema)
       .load("/Users/jinnycho/Downloads/measurements-out.csv")
-    safecastDF.show()
 
     val filteredDF = cleanData(safecastDF)
-    //filteredDF.show()
+    filteredDF.show()
 
     val predictionResultDF = getCluster(filteredDF, 80000)
-    //predictionResultDF.show()
+    predictionResultDF.show()
 
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
 
