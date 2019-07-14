@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/jinnycho/Documents/github/safecast-radioactivity/src/main/scala/SafecastClustering.scala:35:12: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : List[String][0m
-[0m[[0m[31merror[0m] [0m[0m required: org.apache.spark.sql.DataFrame[0m
-[0m[[0m[31merror[0m] [0m[0m    (which expands to)  org.apache.spark.sql.Dataset[org.apache.spark.sql.Row][0m
-[0m[[0m[31merror[0m] [0m[0m    return stringFilterList[0m
-[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/jinnycho/Documents/github/safecast-radioactivity/src/main/scala/SafecastClustering.scala:82:5: method setGeojson has return statement; needs result type[0m
+[0m[[0m[31merror[0m] [0m[0m    return geoStr[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

@@ -4,23 +4,21 @@
 [0m[[0m[0minfo[0m] [0m[0mMerging files...[0m
 [0m[[0m[33mwarn[0m] [0m[0mMerging 'META-INF/MANIFEST.MF' with strategy 'discard'[0m
 [0m[[0m[33mwarn[0m] [0m[0mStrategy 'discard' was applied to a file[0m
-[0m[[0m[0minfo[0m] [0m[0mSHA-1: ca5d5ecb41b9ca8aafc72402db763ee51b7f3efd[0m
+[0m[[0m[0minfo[0m] [0m[0mSHA-1: aedbdcde983b2680adf3683899ce9c798d1262f3[0m
 [0m[[0m[0minfo[0m] [0m[0mPackaging /Users/jinnycho/Documents/github/safecast-radioactivity/target/scala-2.11/SafecastRadioactivityMap-assembly-1.0.jar ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$2$$anonfun$apply$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$2$$anonfun$apply$1.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$2.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$$anonfun$cleanData$2.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$SafecastR$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$SafecastR$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering$SafecastR.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering$SafecastR.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	com/sundogsoftware/spark/SafecastClustering.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/sundogsoftware/spark/SafecastClustering.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$$anonfun$cleanData$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$$anonfun$convertToGeojson$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$$anonfun$convertToGeojson$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$SafecastR$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$SafecastR$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering$SafecastR.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering$SafecastR.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/jinnycho503/spark/SafecastClustering.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/710805252b6a6ee7b70ffa1afe0589f78d9c0b14_dir/com/jinnycho503/spark/SafecastClustering.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	library.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/jinnycho/Documents/github/safecast-radioactivity/target/streams/$global/assemblyOption/$global/streams/assembly/09a2a8b61a1c9beefcba94235ab6d57c613a05c4_ddd5a8bced249bedd86fb4578a39b9fb71480573_da39a3ee5e6b4b0d3255bfef95601890afd80709/library.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m	rootdoc.txt[0m

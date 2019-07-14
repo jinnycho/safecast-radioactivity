@@ -1,4 +1,4 @@
-package com.sundogsoftware.spark
+package com.jinnycho503.spark
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
@@ -10,6 +10,10 @@ import scala.math.sqrt
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 
+import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.clustering.KMeans
+import org.apache.spark.ml.Pipeline
 
 object SafecastClustering {
 
@@ -21,21 +25,72 @@ object SafecastClustering {
    * Create a dataframe of latitude, longitude, value
    */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
-    // filter unnecessary columns
+    // 1. filter unnecessary columns
     val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
-        columnFilteredDF = columnFilteredDF.drop(col)
+      columnFilteredDF = columnFilteredDF.drop(col)
     }
-    // filter null values
+    // 2. filter null values
     var nullFilteredDF = columnFilteredDF.na.drop()
-    // filter if it's not numeric
-    var stringFilterList = List("latitude", "longitude", "value")
-    var stringFilteredDF = nullFilteredDF
-    for (col <- stringFilterList) {
-        stringFilteredDF = stringFilteredDF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
+    return nullFilteredDF
+  }
+
+
+  /*
+   * Apply K-Means Clustering to the given data
+   * to create clusterings
+   */
+  def getCluster(safecastDF: DataFrame, numClusters: Int) : DataFrame = {
+    val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
+    val kmeans = new KMeans().setK(numClusters).setFeaturesCol("features").setPredictionCol("prediction")
+    val pipeline = new Pipeline().setStages(Array(assembler, kmeans))
+    val kMeansPredictionModel = pipeline.fit(safecastDF)
+    val predictionResult = kMeansPredictionModel.transform(safecastDF)
+    return predictionResult
+  }
+
+
+  /*
+   * Summarize K-Means clustering result
+   * Get average radioactivity value in cluster
+   */
+  def summarizeCluster(kMeansDF: DataFrame) : DataFrame = {
+    // list of average radioactivity value in cluster
+    // [clusterNum: avgValue]
+    val avgValues = kMeansDF.groupBy("prediction").avg("value")
+    val avgLats = kMeansDF.groupBy("prediction").avg("latitude")
+    val avgLons = kMeansDF.groupBy("prediction").avg("longitude")
+    val avgLatsLons = avgLats.join(avgLons, "prediction")
+    val avgLatsLonsVals = avgLatsLons.join(avgValues, "prediction")
+    return avgLatsLonsVals
+  }
+
+
+  /*
+   * convert csv to geojson
+   */
+  def setGeojson(lat: String, lon: String, value: String) : String = {
+    val geoStr = s"""{"type": "Feature", "geometry": {"type": "Point", "coordinates": [$lon, $lat] }, "properties": { "value": $value }}"""
+    return geoStr
+  }
+
+
+  /*
+   * convert csv to geojson
+   */
+  def convertToGeojson(clusterSummary: DataFrame) : String = {
+    var finalGeoStr = """{"type": "FeatureCollection", "features": ["""
+    for (row <- clusterSummary.rdd.collect) {
+      val lat = row.mkString(",").split(",")(1)
+      val lon = row.mkString(",").split(",")(2)
+      val value = row.mkString(",").split(",")(3)
+      val geoStr = setGeojson(lat, lon, value)
+      finalGeoStr = finalGeoStr.concat(geoStr + ",")
     }
-    return stringFilteredDF
+    finalGeoStr = finalGeoStr.dropRight(1)
+    finalGeoStr = finalGeoStr.concat("]}")
+    return finalGeoStr
   }
 
   /** Our main function where the action happens */
@@ -54,11 +109,19 @@ object SafecastClustering {
     val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
+      .option("inferSchema", "true")
       .option("charset", "UTF8")
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
-    val stringFilteredDF = cleanData(safecastDF)
-    stringFilteredDF.show()
+    val filteredDF = cleanData(safecastDF)
+    //filteredDF.show()
+
+    val predictionResultDF = getCluster(filteredDF, 4)
+    //predictionResult.show()
+
+    val clusterSummaryDF = summarizeCluster(predictionResultDF)
+
+    val geoJsonStr = convertToGeojson(clusterSummaryDF)
 
     spark.stop()
   }
