@@ -79,7 +79,7 @@ object SafecastClustering {
   /*
    * convert csv to geojson
    */
-  def convertToGeojson(clusterSummary: DataFrame) = {
+  def convertToGeojson(clusterSummary: DataFrame) : String = {
     var finalGeoStr = """{"type": "FeatureCollection", "features": ["""
     for (row <- clusterSummary.rdd.collect) {
       val lat = row.mkString(",").split(",")(1)
@@ -90,7 +90,7 @@ object SafecastClustering {
     }
     finalGeoStr = finalGeoStr.dropRight(1)
     finalGeoStr = finalGeoStr.concat("]}")
-    println(finalGeoStr)
+    return finalGeoStr
   }
 
   /** Our main function where the action happens */
@@ -116,12 +116,13 @@ object SafecastClustering {
     val filteredDF = cleanData(safecastDF)
     //filteredDF.show()
 
-    val predictionResult = getCluster(filteredDF, 4)
+    val predictionResultDF = getCluster(filteredDF, 4)
     //predictionResult.show()
 
-    val clusterSummary = summarizeCluster(predictionResult)
+    val clusterSummaryDF = summarizeCluster(predictionResultDF)
 
-    convertToGeojson(clusterSummary)
+    val geoJsonStr = convertToGeojson(clusterSummaryDF)
+    println(geoJsonStr)
 
     spark.stop()
   }
