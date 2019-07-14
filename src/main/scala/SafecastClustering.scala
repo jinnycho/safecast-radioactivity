@@ -36,10 +36,10 @@ object SafecastClustering {
     return nullFilteredDF
   }
 
+
   /*
    * Apply K-Means Clustering to the given data
    * to create clusterings
-   *
    */
   def getCluster(safecastDF: DataFrame, numClusters: Int) : DataFrame = {
     val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
@@ -49,6 +49,20 @@ object SafecastClustering {
     val predictionResult = kMeansPredictionModel.transform(safecastDF)
     return predictionResult
   }
+
+
+  /*
+   * Summarize K-Means clustering result
+   * Get average radioactivity value in cluster
+   */
+  def reduceCluster(kMeansDF: DataFrame) = {
+    // list of average radioactivity value in cluster
+    // [clusterNum: avgValue]
+    val avgValues = kMeansDF.groupBy("prediction").avg("value")
+    val avgLats = kMeansDF.groupBy("prediction").avg("latitude")
+    val avgLons = kMeansDF.groupBy("prediction").avg("longitude")
+  }
+
 
   /** Our main function where the action happens */
   def main(args: Array[String]) {
@@ -71,10 +85,12 @@ object SafecastClustering {
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
     val filteredDF = cleanData(safecastDF)
-    filteredDF.show()
+    //filteredDF.show()
 
     val predictionResult = getCluster(filteredDF, 4)
-    predictionResult.show()
+    //predictionResult.show()
+
+    reduceCluster(predictionResult)
     spark.stop()
   }
 }
