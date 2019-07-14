@@ -122,7 +122,6 @@ object SafecastClustering {
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
 
     val geoJsonStr = convertToGeojson(clusterSummaryDF)
-    println(geoJsonStr)
 
     spark.stop()
   }
