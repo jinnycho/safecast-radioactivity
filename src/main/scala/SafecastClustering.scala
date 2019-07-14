@@ -29,7 +29,7 @@ object SafecastClustering {
    */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
     // 1. filter unnecessary columns
-    val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
+    val columnFilterlist = List("Captured Time", "Unit", "Location Name", "Device ID", "MD5Sum", "Height", "Surface", "Radiation", "Uploaded Time", "Loader ID")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
       columnFilteredDF = columnFilteredDF.drop(col)
@@ -45,7 +45,7 @@ object SafecastClustering {
    * to create clusterings
    */
   def getCluster(safecastDF: DataFrame, numClusters: Int) : DataFrame = {
-    val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
+    val assembler = new VectorAssembler().setInputCols(Array("Latitude","Longitude")).setOutputCol("features")
     val kmeans = new KMeans().setK(numClusters).setFeaturesCol("features").setPredictionCol("prediction")
     val pipeline = new Pipeline().setStages(Array(assembler, kmeans))
     val kMeansPredictionModel = pipeline.fit(safecastDF)
@@ -61,9 +61,9 @@ object SafecastClustering {
   def summarizeCluster(kMeansDF: DataFrame) : DataFrame = {
     // list of average radioactivity value in cluster
     // [clusterNum: avgValue]
-    val avgValues = kMeansDF.groupBy("prediction").avg("value")
-    val avgLats = kMeansDF.groupBy("prediction").avg("latitude")
-    val avgLons = kMeansDF.groupBy("prediction").avg("longitude")
+    val avgValues = kMeansDF.groupBy("prediction").avg("Value")
+    val avgLats = kMeansDF.groupBy("prediction").avg("Latitude")
+    val avgLons = kMeansDF.groupBy("prediction").avg("Longitude")
     val avgLatsLons = avgLats.join(avgLons, "prediction")
     val avgLatsLonsVals = avgLatsLons.join(avgValues, "prediction")
     return avgLatsLonsVals
@@ -115,13 +115,14 @@ object SafecastClustering {
       .option("header", "true") // filter header
       .option("inferSchema", "true")
       .option("charset", "UTF8")
-      .load("/Users/jinnycho/Downloads/measurements-out.csv")
+      .load("/Users/jinnycho/Downloads/measurements-mini.csv")
+    safecastDF.show()
 
     val filteredDF = cleanData(safecastDF)
     //filteredDF.show()
 
-    val predictionResultDF = getCluster(filteredDF, 80000)
-    //predictionResult.show()
+    val predictionResultDF = getCluster(filteredDF, 8)
+    //predictionResultDF.show()
 
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
 
