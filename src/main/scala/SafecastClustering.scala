@@ -10,8 +10,10 @@ import scala.math.sqrt
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 
+import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
+import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.clustering.KMeans
-import org.apache.spark.ml.evaluation.ClusteringEvaluator
+import org.apache.spark.ml.Pipeline
 
 object SafecastClustering {
 
@@ -23,29 +25,29 @@ object SafecastClustering {
    * Create a dataframe of latitude, longitude, value
    */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
-    // filter unnecessary columns
+    // 1. filter unnecessary columns
     val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
       columnFilteredDF = columnFilteredDF.drop(col)
     }
-    // filter null values
+    // 2. filter null values
     var nullFilteredDF = columnFilteredDF.na.drop()
-    // filter if it's not numeric
-    var stringFilterList = List("latitude", "longitude", "value")
-    var stringFilteredDF = nullFilteredDF
-    for (col <- stringFilterList) {
-      stringFilteredDF = stringFilteredDF.filter(row => row.getAs[String](col).matches("""^\d{1,}\.*\d*$"""))
-    }
-    return stringFilteredDF
+    return nullFilteredDF
   }
 
   /*
    * Apply K-Means Clustering to the given data
    *
    */
-  def cluster(safecastDF: DataFrame) : DataFrame = {
-
+  def cluster(safecastDF: DataFrame) = {
+    val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
+    val kmeans = new KMeans().setK(2).setFeaturesCol("features").setPredictionCol("prediction")
+    val pipeline = new Pipeline().setStages(Array(assembler, kmeans))
+    val kMeansPredictionModel = pipeline.fit(safecastDF)
+    val predictionResult = kMeansPredictionModel.transform(safecastDF)
+    println("Cluster Centers: ")
+    predictionResult.show()
   }
 
   /** Our main function where the action happens */
@@ -64,12 +66,14 @@ object SafecastClustering {
     val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
+      .option("inferSchema", "true")
       .option("charset", "UTF8")
       .load("/Users/jinnycho/Downloads/mini-measurements.csv")
 
-    val stringFilteredDF = cleanData(safecastDF)
-    stringFilteredDF.show()
+    val filteredDF = cleanData(safecastDF)
+    filteredDF.show()
 
+    //cluster(stringFilteredDF)
     spark.stop()
   }
 }
