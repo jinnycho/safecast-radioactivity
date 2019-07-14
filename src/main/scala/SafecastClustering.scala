@@ -15,6 +15,9 @@ import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.clustering.KMeans
 import org.apache.spark.ml.Pipeline
 
+import java.io.File
+import java.io.PrintWriter
+
 object SafecastClustering {
 
   // Case class for a column name for lat, lon, value (radioactivity)
@@ -93,6 +96,7 @@ object SafecastClustering {
     return finalGeoStr
   }
 
+
   /** Our main function where the action happens */
   def main(args: Array[String]) {
 
@@ -122,6 +126,11 @@ object SafecastClustering {
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
 
     val geoJsonStr = convertToGeojson(clusterSummaryDF)
+
+    // Write resulting geojson to a file
+    val writer = new PrintWriter(new File("clusters.geojson"))
+    writer.write(geoJsonStr)
+    writer.close()
 
     spark.stop()
   }
