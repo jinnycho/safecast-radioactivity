@@ -38,16 +38,16 @@ object SafecastClustering {
 
   /*
    * Apply K-Means Clustering to the given data
+   * to create clusterings
    *
    */
-  def cluster(safecastDF: DataFrame) = {
+  def getCluster(safecastDF: DataFrame, numClusters: Int) : DataFrame = {
     val assembler = new VectorAssembler().setInputCols(Array("latitude","longitude")).setOutputCol("features")
-    val kmeans = new KMeans().setK(2).setFeaturesCol("features").setPredictionCol("prediction")
+    val kmeans = new KMeans().setK(numClusters).setFeaturesCol("features").setPredictionCol("prediction")
     val pipeline = new Pipeline().setStages(Array(assembler, kmeans))
     val kMeansPredictionModel = pipeline.fit(safecastDF)
     val predictionResult = kMeansPredictionModel.transform(safecastDF)
-    println("Cluster Centers: ")
-    predictionResult.show()
+    return predictionResult
   }
 
   /** Our main function where the action happens */
@@ -73,7 +73,8 @@ object SafecastClustering {
     val filteredDF = cleanData(safecastDF)
     filteredDF.show()
 
-    //cluster(stringFilteredDF)
+    val predictionResult = getCluster(filteredDF, 4)
+    predictionResult.show()
     spark.stop()
   }
 }
