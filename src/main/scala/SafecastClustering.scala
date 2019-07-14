@@ -55,7 +55,7 @@ object SafecastClustering {
    * Summarize K-Means clustering result
    * Get average radioactivity value in cluster
    */
-  def reduceCluster(kMeansDF: DataFrame) : DataFrame = {
+  def summarizeCluster(kMeansDF: DataFrame) : DataFrame = {
     // list of average radioactivity value in cluster
     // [clusterNum: avgValue]
     val avgValues = kMeansDF.groupBy("prediction").avg("value")
@@ -66,6 +66,32 @@ object SafecastClustering {
     return avgLatsLonsVals
   }
 
+
+  /*
+   * convert csv to geojson
+   */
+  def setGeojson(lat: String, lon: String, value: String) : String = {
+    val geoStr = s"""{"type": "Feature", "geometry": {"type": "Point", "coordinates": [$lon, $lat] }, "properties": { "value": $value }}"""
+    return geoStr
+  }
+
+
+  /*
+   * convert csv to geojson
+   */
+  def convertToGeojson(clusterSummary: DataFrame) = {
+    var finalGeoStr = """{"type": "FeatureCollection", "features": ["""
+    for (row <- clusterSummary.rdd.collect) {
+      val lat = row.mkString(",").split(",")(1)
+      val lon = row.mkString(",").split(",")(2)
+      val value = row.mkString(",").split(",")(3)
+      val geoStr = setGeojson(lat, lon, value)
+      finalGeoStr = finalGeoStr.concat(geoStr + ",")
+    }
+    finalGeoStr = finalGeoStr.dropRight(1)
+    finalGeoStr = finalGeoStr.concat("]}")
+    println(finalGeoStr)
+  }
 
   /** Our main function where the action happens */
   def main(args: Array[String]) {
@@ -93,7 +119,10 @@ object SafecastClustering {
     val predictionResult = getCluster(filteredDF, 4)
     //predictionResult.show()
 
-    reduceCluster(predictionResult)
+    val clusterSummary = summarizeCluster(predictionResult)
+
+    convertToGeojson(clusterSummary)
+
     spark.stop()
   }
 }
