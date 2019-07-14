@@ -115,12 +115,12 @@ object SafecastClustering {
       .option("header", "true") // filter header
       .option("inferSchema", "true")
       .option("charset", "UTF8")
-      .load("/Users/jinnycho/Downloads/mini-measurements.csv")
+      .load("/Users/jinnycho/Downloads/measurements-out.csv")
 
     val filteredDF = cleanData(safecastDF)
     //filteredDF.show()
 
-    val predictionResultDF = getCluster(filteredDF, 4)
+    val predictionResultDF = getCluster(filteredDF, 80000)
     //predictionResult.show()
 
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
