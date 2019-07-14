@@ -134,10 +134,10 @@ object SafecastClustering {
       .schema(customSchema)
       .load("/Users/jinnycho/Downloads/measurements/measures-1.csv")
 
-    val filteredDF = cleanData(safecastDF)
+    val filteredDF = cleanData(safecastDF).cache()
     filteredDF.show()
 
-    val predictionResultDF = getCluster(filteredDF, 20000)
+    val predictionResultDF = getCluster(filteredDF, 20000).cache()
     predictionResultDF.show()
 
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
