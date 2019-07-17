@@ -8,6 +8,7 @@ import java.nio.charset.CodingErrorAction
 import scala.io.Codec
 import scala.math.sqrt
 import org.apache.spark.sql._
+import org.apache.spark.sql.types._
 import org.apache.spark.sql.functions._
 
 import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
@@ -29,7 +30,7 @@ object SafecastClustering {
    */
   def cleanData(safecastDF: DataFrame) : DataFrame = {
     // 1. filter unnecessary columns
-    val columnFilterlist = List("captured_at", "unit", "location_name", "device_id", "id", "user_id", "original_id", "measurement_import_id", "height", "devicetype_id", "sensor_id", "station_id", "channel_id")
+    val columnFilterlist = List("captured_time", "unit", "location_name", "device_id", "MD5Sum", "height", "surface", "radiation", "upload_time", "loader_id")
     var columnFilteredDF = safecastDF
     for (col <- columnFilterlist) {
       columnFilteredDF = columnFilteredDF.drop(col)
@@ -110,20 +111,37 @@ object SafecastClustering {
       .master("local[*]")
       .getOrCreate()
 
+    val customSchema = StructType(Array(
+      StructField("captured_time", StringType, true),
+      StructField("latitude", DoubleType, true),
+      StructField("longitude", DoubleType, true),
+      StructField("value", DoubleType, true),
+      StructField("unit", StringType, true),
+      StructField("location_name", StringType, true),
+      StructField("device_id", StringType, true),
+      StructField("MD5Sum", StringType, true),
+      StructField("height", StringType, true),
+      StructField("surface", StringType, true),
+      StructField("radiation", StringType, true),
+      StructField("upload_time", StringType, true),
+      StructField("loader_id", StringType, true)
+    ))
+
     val safecastDF = spark.read
       .format("csv")
       .option("header", "true") // filter header
-      .option("inferSchema", "true")
       .option("charset", "UTF8")
-      .load("/Users/jinnycho/Downloads/mini-measurements.csv")
+      .schema(customSchema)
+      .load("/Users/jinnycho/Downloads/measurements/measures-6.csv")
 
     val filteredDF = cleanData(safecastDF)
-    //filteredDF.show()
+    filteredDF.show()
 
-    val predictionResultDF = getCluster(filteredDF, 4)
-    //predictionResult.show()
+    val predictionResultDF = getCluster(filteredDF, 3000)
+    predictionResultDF.show()
 
     val clusterSummaryDF = summarizeCluster(predictionResultDF)
+    clusterSummaryDF.show()
 
     val geoJsonStr = convertToGeojson(clusterSummaryDF)
 

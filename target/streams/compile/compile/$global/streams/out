@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/jinnycho/Documents/github/safecast-radioactivity/src/main/scala/SafecastClustering.scala:82:5: method setGeojson has return statement; needs result type[0m
-[0m[[0m[31merror[0m] [0m[0m    return geoStr[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/jinnycho/Documents/github/safecast-radioactivity/src/main/scala/SafecastClustering.scala:124:5: not found: value predictionResult[0m
+[0m[[0m[31merror[0m] [0m[0m    predictionResult.show()[0m
 [0m[[0m[31merror[0m] [0m[0m    ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
