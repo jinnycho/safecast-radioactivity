@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jinnycho/safecast-radioactivity/issues"
   },
-  "homepage": "https://github.com/jinnycho/safecast-radioactivity#readme"
+  "homepage": "https://github.com/jinnycho/safecast-radioactivity#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
