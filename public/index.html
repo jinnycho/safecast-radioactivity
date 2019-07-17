@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
-        <title>Safecast Radioactivity Map</title>
-        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
-        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet'/>
-        <script src="js/main.js"></script>
-        <script src="bundle.js"></script>
-        <!--<link href='css/main.css' rel='stylesheet' />
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700" rel="stylesheet"/>
-        <script src="js/main.js"></script>
-        <link rel="icon" href="favicon.ico" type="image/x-icon"> <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">-->
-    </head>
+<head>
+    <meta charset='utf-8' />
+    <title>Radioactivity Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
 
-    <body>
-      <div id="text">
-        <h1 class="">Safecast Radioactivity Map</h1>
-      </div>
-      <div id='container'>
-        <div id='map'></div>
-      </div>
-    </body>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiamlubnljaG81MDMiLCJhIjoiY2o2am16cnA5MDhxMTMycGR0MXRhaDZxNiJ9.lNDt1qFFi4V7zUin8Jj1LQ';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10',
+    zoom: 12,
+    center: [-122.447303, 37.753574]
+});
+
+</script>
+
+</body>
 </html>
