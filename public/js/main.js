@@ -1,5 +1,3 @@
-//const draw = require('./js/draw');
-
 /*
  * This file is mainly used to
  * 1. render the map
