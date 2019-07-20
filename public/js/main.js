@@ -44,12 +44,11 @@ function project(d) {
  */
 var circles;
 function drawMap(data) {
-  console.log("drawMap");
   circles = svg.selectAll("circle")
               .data(data.features)
               .enter()
               .append("circle")
-              .attr("r", 16)
+              .attr("r", 5)
   update();
   map.on("viewreset", update);
   map.on("move", update);
@@ -57,7 +56,6 @@ function drawMap(data) {
 } 
 
 function update() {
-  console.log("update");
   circles
     .attr("cx", function(d) { return project(d.geometry.coordinates).x })
     .attr("cy", function(d) { return project(d.geometry.coordinates).y });
