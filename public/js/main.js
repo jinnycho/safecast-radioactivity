@@ -6,11 +6,11 @@ let view = "map";
 /*
  * This file is mainly used to
  * 1. render the map
- * 2. visualize data 
+ * 2. visualize data
  */
 
 /**
- * Mapbox setup 
+ * Mapbox setup
  */
 mapboxgl.accessToken = 'pk.eyJ1IjoiamlubnljaG81MDMiLCJhIjoiY2o2am16cnA5MDhxMTMycGR0MXRhaDZxNiJ9.lNDt1qFFi4V7zUin8Jj1LQ';
 var map = new mapboxgl.Map({
@@ -50,6 +50,15 @@ function project(d) {
 /**
  * D3
  */
+function circleColor(d, i) {
+  if (d.properties.value < 10) return "#9ACD32";
+  if (d.properties.value >= 10 && d.properties.value < 30) return "#FFD700";
+  if (d.properties.value >= 30 && d.properties.value < 50) return "#FFA500";
+  if (d.properties.value >= 50 && d.properties.value < 100) return "#DC143C";
+  // warning level
+  return "#283747"
+}
+
 var circles;
 function drawMap(data1, data2, data3, data4, data5) {
   circles = svg.selectAll("circle")
@@ -60,12 +69,13 @@ function drawMap(data1, data2, data3, data4, data5) {
               .data(data5.features)
               .enter()
               .append("circle")
-              .attr("r", 5)
+              .attr("r", 7)
+              .attr("fill", (d, i) => circleColor(d, i))
   update();
   map.on("viewreset", update);
   map.on("move", update);
   map.on("moveend", update);
-} 
+}
 
 function update() {
   circles
