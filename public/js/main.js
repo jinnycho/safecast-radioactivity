@@ -51,9 +51,10 @@ function project(d) {
  * D3
  */
 function circleColor(d, i) {
-  // light
-  if (d.properties.value < 30) return "green"
-  return "red"
+  if (d.properties.value < 30) return "#FFD700";
+  if (d.properties.value >= 30 && d.properties.value < 50) return "#FFD700";
+  if (d.properties.value >= 50 && d.properties.value < 100) return "#DC143C";
+  return "#283747"
 }
 
 var circles;
