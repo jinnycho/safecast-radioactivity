@@ -52,8 +52,9 @@ function project(d) {
  */
 function circleColor(d, i) {
   // about the radiation you receive by taking a flight
-  if (d.properties.value < 30) return "#FFD700";
-  if (d.properties.value >= 30 && d.properties.value < 50) return "#FFD700";
+  if (d.properties.value < 10) return "#9ACD32";
+  if (d.properties.value >= 10 && d.properties.value < 30) return "#FFD700";
+  if (d.properties.value >= 30 && d.properties.value < 50) return "#FFA500";
   if (d.properties.value >= 50 && d.properties.value < 100) return "#DC143C";
   // warning level
   return "#283747"
