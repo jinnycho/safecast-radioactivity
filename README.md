@@ -1,9 +1,8 @@
 
 <!-- TABLE OF CONTENTS -->
-## Table of Contents
 
 ## About the Project
-An interactive map using Safecast data, Spark, Mapbox and D3.
+An interactive map using Safecast data, Spark, Scala, Mapbox and D3.
 
 <!-- ### Built With
 
