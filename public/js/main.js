@@ -29,8 +29,16 @@ var svg = d3.select(canvas)
     .append("svg")
 
 map.on('load', function() {
-  d3.json('./data/clusters-1.geojson', (err, data) => {
-    drawMap(data);
+  d3.json('./data/clusters-1.geojson', (err, data1) => {
+    d3.json('./data/clusters-2.geojson', (err, data2) => {
+      d3.json('./data/clusters-3.geojson', (err, data3) => {
+        d3.json('./data/clusters-4.geojson', (err, data4) => {
+          d3.json('./data/clusters-5.geojson', (err, data5) => {
+            drawMap(data1, data2, data3, data4, data5);
+          });
+        });
+      });
+    });
   });
 });
 
@@ -43,9 +51,13 @@ function project(d) {
  * D3
  */
 var circles;
-function drawMap(data) {
+function drawMap(data1, data2, data3, data4, data5) {
   circles = svg.selectAll("circle")
-              .data(data.features)
+              .data(data1.features)
+              .data(data2.features)
+              .data(data3.features)
+              .data(data4.features)
+              .data(data5.features)
               .enter()
               .append("circle")
               .attr("r", 5)
