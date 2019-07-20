@@ -69,7 +69,7 @@ function drawMap(data1, data2, data3, data4, data5) {
               .data(data5.features)
               .enter()
               .append("circle")
-              .attr("r", 5)
+              .attr("r", 7)
               .attr("fill", (d, i) => circleColor(d, i))
   update();
   map.on("viewreset", update);
