@@ -8,17 +8,17 @@ An interactive map to show the severity of radiation around the world.
 
 
 ### Built With
-|     **Criteria**    |    **Details**   |
-|:---------------:|:------------:|
-| Data Processing |     Scala    |
-|                 |   SparkSQL   |
-|                 |  Spark MLLib |
-|                 |      sbt     |
-|  Visualization  | Mapbox gl-js |
-|                 |      D3      |
-|                 |  JavaScript  |
-|                 |    Node.js   |
-|                 |    express   |
+- Data Processing
+    - Scala
+    - Spark SQL
+    - Spark Mllib
+    - sbt
+- Visualization
+    - Mapbox gl-js
+    - D3
+    - JavaScript
+    - Node.js
+    - Express
 
 ## Getting Started
 
