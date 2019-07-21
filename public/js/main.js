@@ -21,7 +21,7 @@ var map = new mapboxgl.Map({
 var canvas = map.getCanvasContainer();
 // overlay d3 on the map
 var svg = d3.select(canvas)
-    .append("svg");
+    .append('svg');
 
 map.on('load', function(result, err) {
   if (err) throw (new Error('Error loading a map'));
@@ -57,48 +57,48 @@ function circleColor(d, i) {
   if (d.properties.value >= 30 && d.properties.value < 50) return '#FFA500';
   if (d.properties.value >= 50 && d.properties.value < 100) return '#DC143C';
   // warning level
-  return "#283747"
+  return '#283747';
 }
 
-var tooltip = d3.select("body")
-                .append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0);
+var tooltip = d3.select('body')
+  .append('div')
+  .attr('class', 'tooltip')
+  .style('opacity', 0);
 
 var circles;
 function drawMap(data1, data2, data3, data4, data5) {
-  circles = svg.selectAll("circle")
-              .data(data1.features)
-              .data(data2.features)
-              .data(data3.features)
-              .data(data4.features)
-              .data(data5.features)
-              .enter()
-              .append("circle")
-              .attr("r", 7)
-              .attr("fill", (d, i) => circleColor(d, i))
-              .on("mouseover", (d) => {
-                tooltip.transition()
-                       .duration(200)
-                       .style("opacity", .9);
-                tooltip.html(d.properties.value.toFixed(2))
-                       .style("left", (d3.event.pageX) + "px")
-                       .style("top", (d3.event.pageY - 10) + "px");
-              })
-              .on("mouseout", (d) => {
-                tooltip.transition()
-                       .duration(500)
-                       .style("opacity", 0);
-              });
+  circles = svg.selectAll('circle')
+    .data(data1.features)
+    .data(data2.features)
+    .data(data3.features)
+    .data(data4.features)
+    .data(data5.features)
+    .enter()
+    .append('circle')
+    .attr('r', 7)
+    .attr('fill', (d, i) => circleColor(d, i))
+    .on('mouseover', (d) => {
+      tooltip.transition()
+        .duration(200)
+        .style('opacity', .9);
+      tooltip.html(d.properties.value.toFixed(2))
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY - 10) + 'px');
+    })
+    .on('mouseout', (d) => {
+      tooltip.transition()
+        .duration(500)
+        .style('opacity', 0);
+    });
 
   update();
-  map.on("viewreset", update);
-  map.on("move", update);
-  map.on("moveend", update);
+  map.on('viewreset', update);
+  map.on('move', update);
+  map.on('moveend', update);
 }
 
 function update() {
   circles
-    .attr("cx", function(d) { return project(d.geometry.coordinates).x })
-    .attr("cy", function(d) { return project(d.geometry.coordinates).y });
+    .attr('cx', function(d) { return project(d.geometry.coordinates).x })
+    .attr('cy', function(d) { return project(d.geometry.coordinates).y });
 }
