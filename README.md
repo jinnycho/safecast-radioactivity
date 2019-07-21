@@ -23,7 +23,13 @@ An interactive map to show the severity of radiation around the world.
 ## Getting Started
 
 ### Prerequisites
-
-### Installation
+- Spark v2.2.0
+- Scala v2.11.8
+- npm v6
+- node v10
 
 ## Usage
+### 1. To update dataset
+- Install csv dataset from [Safecast Org](https://blog.safecast.org/downloads/).
+- Unzip the dataset
+- Split the dataset to a reasonable size (~2GB) using `split -b 2000m split_me.csv` 
