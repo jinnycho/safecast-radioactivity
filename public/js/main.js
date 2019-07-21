@@ -8,7 +8,7 @@
  * Mapbox setup
  */
 mapboxgl.accessToken = 'pk.eyJ1IjoiamlubnljaG81MDMiLCJhIjoiY2o2am16cnA5MDhxMTMycGR0MXRhaDZxNiJ9.lNDt1qFFi4V7zUin8Jj1LQ';
-var map = new mapboxgl.Map({
+const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v10',
   zoom: 1,
@@ -18,9 +18,9 @@ var map = new mapboxgl.Map({
 /**
  * Mapbox + D3
  */
-var canvas = map.getCanvasContainer();
+const canvas = map.getCanvasContainer();
 // overlay d3 on the map
-var svg = d3.select(canvas)
+const svg = d3.select(canvas)
   .append('svg');
 
 map.on('load', function(result, err) {
@@ -60,12 +60,12 @@ function circleColor(d, i) {
   return '#283747';
 }
 
-var tooltip = d3.select('body')
+const tooltip = d3.select('body')
   .append('div')
   .attr('class', 'tooltip')
   .style('opacity', 0);
 
-var circles;
+let circles;
 function drawMap(data1, data2, data3, data4, data5) {
   circles = svg.selectAll('circle')
     .data(data1.features)
