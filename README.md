@@ -31,5 +31,12 @@ An interactive map to show the severity of radiation around the world.
 ## Usage
 ### 1. To update dataset
 - Install csv dataset from [Safecast Org](https://blog.safecast.org/downloads/).
-- Unzip the dataset
-- Split the dataset to a reasonable size (~2GB) using `split -b 2000m split_me.csv` 
+- Unzip the dataset.
+- Split the dataset to a reasonable size (~2GB) using `split -b 2000m split_me.csv`.
+- If necessary, update the path to that csv file [here](https://github.com/jinnycho/safecast-radioactivity/blob/905f7cd8be80de5a8ddab5d760e17191a6c52a9a/src/main/scala/SafecastClustering.scala#L135).
+- In the root directory, run `sbt assembly` so everything's compiled to run spark jobs.
+- Then run `spark-submit target/scala-2.11/SafecastRadioactivityMap-assembly-1.0.jar`
+
+### 2. To see the map
+- Run `npm start`
+- Open `http://localhost:3000/`
