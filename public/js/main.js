@@ -59,6 +59,11 @@ function circleColor(d, i) {
   return "#283747"
 }
 
+var tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
 var circles;
 function drawMap(data1, data2, data3, data4, data5) {
   circles = svg.selectAll("circle")
@@ -71,8 +76,18 @@ function drawMap(data1, data2, data3, data4, data5) {
               .append("circle")
               .attr("r", 7)
               .attr("fill", (d, i) => circleColor(d, i))
-              .on("click", (d) => {
-                alert(d.properties.value);
+              .on("mouseover", (d) => {
+                tooltip.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+                tooltip.html(d.properties.value.toFixed(2))
+                       .style("left", (d3.event.pageX) + "px")
+                       .style("top", (d3.event.pageY - 10) + "px");
+              })
+              .on("mouseout", (d) => {
+                tooltip.transition()
+                       .duration(500)
+                       .style("opacity", 0);
               });
 
   update();
