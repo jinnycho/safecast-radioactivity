@@ -20,5 +20,9 @@
   "homepage": "https://github.com/jinnycho/safecast-radioactivity#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-strongloop": "^2.1.0"
   }
 }
