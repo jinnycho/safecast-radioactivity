@@ -2,7 +2,10 @@
 <!-- TABLE OF CONTENTS -->
 
 ## About the Project
-An interactive map using Safecast data, Spark, Scala, Mapbox and D3.
+An interactive map to show the severity of radiation around the world.
+
+![result](https://user-images.githubusercontent.com/45345735/61595900-d6fa9280-abca-11e9-9166-c05357a65ab9.gif)
+
 
 ### Built With
 |     **Criteria**    |    **Details**   |
