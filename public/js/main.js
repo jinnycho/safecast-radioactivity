@@ -12,7 +12,7 @@ var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v10',
   zoom: 1,
-  center: [-122.447303, 37.753574]
+  center: [-122.447303, 37.753574],
 });
 
 /**
@@ -21,7 +21,7 @@ var map = new mapboxgl.Map({
 var canvas = map.getCanvasContainer();
 // overlay d3 on the map
 var svg = d3.select(canvas)
-    .append('svg');
+  .append('svg');
 
 map.on('load', function(result, err) {
   if (err) throw (new Error('Error loading a map'));
@@ -30,11 +30,11 @@ map.on('load', function(result, err) {
     d3.json('./data/clusters-2.geojson', (err, data2) => {
       if (err) throw (new Error('Error reading clusters-2.geojson'));
       d3.json('./data/clusters-3.geojson', (err, data3) => {
-      if (err) throw (new Error('Error reading clusters-3.geojson'));
+        if (err) throw (new Error('Error reading clusters-3.geojson'));
         d3.json('./data/clusters-4.geojson', (err, data4) => {
-        if (err) throw (new Error('Error reading clusters-4.geojson'));
+          if (err) throw (new Error('Error reading clusters-4.geojson'));
           d3.json('./data/clusters-5.geojson', (err, data5) => {
-          if (err) throw (new Error('Error reading clusters-5.geojson'));
+            if (err) throw (new Error('Error reading clusters-5.geojson'));
             drawMap(data1, data2, data3, data4, data5);
           });
         });
@@ -80,7 +80,7 @@ function drawMap(data1, data2, data3, data4, data5) {
     .on('mouseover', (d) => {
       tooltip.transition()
         .duration(200)
-        .style('opacity', .9);
+        .style('opacity', 0.9);
       tooltip.html(d.properties.value.toFixed(2))
         .style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY - 10) + 'px');
@@ -99,6 +99,6 @@ function drawMap(data1, data2, data3, data4, data5) {
 
 function update() {
   circles
-    .attr('cx', function(d) { return project(d.geometry.coordinates).x })
-    .attr('cy', function(d) { return project(d.geometry.coordinates).y });
+    .attr('cx', function(d) { return project(d.geometry.coordinates).x; })
+    .attr('cy', function(d) { return project(d.geometry.coordinates).y; });
 }
