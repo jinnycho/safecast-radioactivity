@@ -16,3 +16,16 @@ circle:hover {
   fill: #5e5ee5;
   stroke-width: 18;
 }
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 15px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: #B0E0E6;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none
+}
