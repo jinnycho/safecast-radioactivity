@@ -40,3 +40,6 @@ An interactive map to show the severity of radiation around the world.
 ### 2. To see the map
 - Run `npm start`
 - Open `http://localhost:3000/`
+
+## More details
+- Please visit to https://jinnycho.github.io/blog/safecast.
