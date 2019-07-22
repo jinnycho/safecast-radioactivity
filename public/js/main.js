@@ -23,24 +23,17 @@ const canvas = map.getCanvasContainer();
 const svg = d3.select(canvas)
   .append('svg');
 
+// load data
 map.on('load', (result, err) => {
   if (err) throw (new Error('Error loading a map'));
-  d3.json('./data/clusters-1.geojson', (err, data1) => {
-    if (err) throw (new Error('Error reading clusters-1.geojson'));
-    d3.json('./data/clusters-2.geojson', (err, data2) => {
-      if (err) throw (new Error('Error reading clusters-2.geojson'));
-      d3.json('./data/clusters-3.geojson', (err, data3) => {
-        if (err) throw (new Error('Error reading clusters-3.geojson'));
-        d3.json('./data/clusters-4.geojson', (err, data4) => {
-          if (err) throw (new Error('Error reading clusters-4.geojson'));
-          d3.json('./data/clusters-5.geojson', (err, data5) => {
-            if (err) throw (new Error('Error reading clusters-5.geojson'));
-            drawMap(data1, data2, data3, data4, data5);
-          });
-        });
-      });
-    });
-  });
+  queue(5)
+    .defer(d3.json, './data/clusters-1.geojson')
+    .defer(d3.json, './data/clusters-2.geojson')
+    .defer(d3.json, './data/clusters-3.geojson')
+    .defer(d3.json, './data/clusters-4.geojson')
+    .defer(d3.json, './data/clusters-5.geojson')
+    .defer(d3.json, './data/clusters-6.geojson')
+    .await(drawMap);
 });
 
 // project geojson coordinate to the map's current state
@@ -66,13 +59,15 @@ const tooltip = d3.select('body')
   .style('opacity', 0);
 
 let circles;
-const drawMap = (data1, data2, data3, data4, data5) => {
+const drawMap = (err, data1, data2, data3, data4, data5, data6) => {
+  if (err) throw (new Error('Error calling drawMap()'));
   circles = svg.selectAll('circle')
     .data(data1.features)
     .data(data2.features)
     .data(data3.features)
     .data(data4.features)
     .data(data5.features)
+    .data(data6.features)
     .enter()
     .append('circle')
     .attr('r', 7)
