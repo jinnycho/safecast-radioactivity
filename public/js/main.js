@@ -26,7 +26,7 @@ const svg = d3.select(canvas)
 // load data
 map.on('load', (result, err) => {
   if (err) throw (new Error('Error loading a map'));
-  queue(5)
+  queue(6)
     .defer(d3.json, './data/clusters-1.geojson')
     .defer(d3.json, './data/clusters-2.geojson')
     .defer(d3.json, './data/clusters-3.geojson')
