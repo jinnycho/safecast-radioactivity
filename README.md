@@ -4,7 +4,7 @@
 ## About the Project
 An interactive map to show the severity of radiation around the world.
 
-<img src="https://user-images.githubusercontent.com/45345735/61595900-d6fa9280-abca-11e9-9166-c05357a65ab9.gif" width="500">
+<img src="https://user-images.githubusercontent.com/45345735/61601909-91a78680-ac05-11e9-8754-913b6941ae4d.gif" width="500">
 
 
 ### Built With
